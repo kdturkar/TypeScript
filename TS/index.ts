@@ -204,22 +204,22 @@ const bolNa: Great = (name) => `Tera naam ${name}`;
 console.log(bolNa('Radha-Krishna'));
 
 // 5. Extending Interfaces
-interface Animal {
+interface Animal5 {
     name: string;
 }
-interface Dog extends Animal {
+interface Dog5 extends Animal5 {
     breed: string;
 }
-const myDog: Dog = {
+const myDog: Dog5 = {
     name: "Buddy",
     breed: "Golden"
 }
 
 // 6. Using Interfaces with Classes
-interface Shape {
+interface Shape6 {
     area(): number;
 }
-class Circle implements Shape {
+class Circle implements Shape6 {
     constructor(public radius: number) { }
     area() {
         return Math.PI * this.radius ** 2;
@@ -471,3 +471,104 @@ class Circlee extends Shape {
 }
 const circlee = new Circlee(3);
 console.log(circlee.calculateArea()); // Output: 28.274333882308138
+
+
+
+// OOPS in TS
+// 1. Encapsulation (Encapsulation is the bundling of data (properties) and methods (functions) within a class and restricting access to them using access modifiers.)
+class BankAccount {
+    private balance: number; // Only accessible within the class
+    constructor(initialBalance: number) {
+        this.balance = initialBalance;
+    }
+    public deposit(amount: number): void {
+        this.balance += amount;
+    }
+    public getBalance(): number {
+        return this.balance;
+    }
+}
+const account = new BankAccount(1000);
+account.deposit(500);
+console.log(account.getBalance()); // 1500
+
+// Significance:
+// - Protects data from unauthorized access.
+// - Ensures controlled interaction with class properties via getter and setter methods.
+
+
+// 2. Inheritance (Inheritance allows a class (child) to inherit properties and methods from another class (parent).)
+class Animal {
+    protected sound: string;
+    constructor(sound: string) {
+        this.sound = sound;
+    }
+    public makeSound(): void {
+        console.log(this.sound);
+    }
+}
+class Dog extends Animal {
+    constructor(nickname: string) {
+        super(nickname); // Calls the parent class constructor
+    }
+    // public makeSound(): void {
+    //     console.log("kd");
+    // }
+}
+const dog = new Dog("remo");
+dog.makeSound(); // remo
+const dog2 = new Dog("remo");
+console.log(dog == dog2); // false
+console.log(`${typeof dog} and ${typeof dog2}`);
+console.log(typeof dog == typeof dog2); // true
+
+// Significance:
+// - Promotes code reuse by enabling shared functionality between related classes.
+
+// 3. Abstraction (Abstraction hides implementation details and exposes only the essential features of an object.)
+abstract class Shape2 {
+    abstract calculateArea(): number; // Abstract method with no implementation
+}
+class Circle2 extends Shape2 {
+    constructor(private radius: number) {
+        super();
+    }
+    calculateArea(): number {
+        return Math.PI * this.radius * this.radius;
+    }
+}
+const circle2 = new Circle2(5);
+console.log(circle2.calculateArea()); // 78.53981633974483
+
+// 4. Polymorphism (Polymorphism allows objects to take on multiple forms, typically achieved via method overriding.)
+// TypeScript supports method overriding but not method overloading
+class Vehicle4 {
+    // default public access modifier
+    move(): void {
+        console.log('parent class move method');
+    }
+}
+class Car4 extends Vehicle4 {
+    move(): void {
+        console.log('child class move method');
+    }
+}
+// myVehicle is declared as a reference of type Vehicle4 (the parent class)
+const myVehicle: Vehicle4 = new Car4();
+// At runtime, the actual object type (Car4) determines which move() method is executed, not the reference type (Vehicle4)
+
+// ** This behavior aligns with the Liskov Substitution Principle in OOP:
+// => You can substitute an object of a derived class (Car4) wherever an object of the base class (Vehicle4) is expected.
+
+myVehicle.move();
+
+// # Summary for Interviews:
+// Encapsulation: Protect and control access to data.
+// Abstraction: Simplify usage by exposing only necessary details.
+// Inheritance: Reuse code across related classes.
+// Polymorphism: Achieve dynamic behavior based on object types.
+// Access Modifiers: Govern access levels for properties and methods.
+
+
+
+
