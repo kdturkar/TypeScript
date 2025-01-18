@@ -1,0 +1,58 @@
+## Difference b/w TS & JS.
+#Type System:- 
+typescript is statically typed like java, whereas javascript is dynamically typed.
+
+#Compilation:- 
+Needs to be compiled to javascript, whereas in JS it is directly executed by browser and node.js.
+
+#Error Checking:- 
+Compile-time error checking, whereas in JS errors occur at runtime.
+
+#Support for OOPs:- 
+Better support with i/f, classes, generics; whereas in JS it support basic prototype-based OOP.
+
+#Code Scalability:- 
+Easier to scale with static types, interfaces, & strong typing. Whereas in JS it is more challenging to scale due to dynamic typing.
+
+#Use case:- 
+Suitable for large, complex application; Whereas, in JS it is ideal for smaller projects and fast prototyping.
+
+#Interoperability:- 
+Can use JS libraries & code in TS; Whereas in JS it is fully interoperable with TS.
+
+#Developement Speed:-
+Slower due to type checks & compiling; Whereas in JS it is faster as no complilation is required.
+
+#ES6+ feature:-
+Includes all ES6+ features and future proposals; Whereas in JS it includes ES6+ features, but depends on browser/Node.js version.
+
+
+
+##HOW TypeScript Works:-
+#Transpilation:-
+A process in which typescript file is converted into JS file using compiler. It needed because only JS code runs on browser not TS.
+#Compilation means code of high level language converted to low level language.
+
+
+
+##Why TS compiles to JS?
+1] JS is the language that browsers and node.js understand natively.
+2] Browsers cannot directly execute TS code, it needs to be converted into JS. 
+
+##JS Compatibility:-
+TS is a superset of JS, adds extra features (Static Typing) on top of JS syntax.
+During compilation string type annotation which defines variable type removed, leaving regular JS.
+
+##Backward Compatibility:-
+TS supports modern JS features (ES6+) even when older browsers might not. During compilation, TS converts these modern features into a form that older browsers can understand.
+
+
+##Conclusion:-
+TS compiles to JS to ensure the code can run on any environment that supports JS, maintain compatibility with JS libraries (React, JQuery, etc.), & leaverage static typing and modern features without sacrificing runtime performance. It is used during developement but after compilation JS works.
+
+-----------------------------------------------------------------
+
+##Built-in Types:-
+JS:- number, string, boolean, null, undefined, object.
+TS:- any, unknown, never, enum, tupple.
+

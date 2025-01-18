@@ -1,0 +1,473 @@
+// let var1: number = 1;
+// var1 = 30;
+
+// function adds(a: number, b: number): number {
+//     return a + b;
+// }
+
+// let x = adds(34, 76);
+// console.log(x);
+
+
+
+
+
+// #BASIC TYPES
+
+let num = 1234_564_443;
+let num1: bigint = 12345676543234543433432n;
+console.log(num);
+console.log(num1);
+let character: string = "Krishna Radha";
+const isAvailable: boolean = true;
+
+let val: undefined = undefined;
+// val = null;
+let user;
+console.log(user);
+let val2: null = null;
+// val2 = undefined;
+
+let obj: { name: string, age: number } = {
+    name: 'xyz',
+    age: 34
+}
+obj = { ...obj, age: 324324 };
+console.log(obj);
+
+let object: object = {
+    name: 'xyz',
+    age: 34
+}
+object = { ...object, phone: 784387483 };
+console.log(object);
+
+// any type
+let numValue: any;
+numValue = 1;
+numValue = "kd";
+
+function testAnyType(val: any) {
+    console.log(val);
+}
+
+// Arrays
+let numArray: number[] = [1, 234, 4545, 344];
+let charArray: string[] = ['1', '234', '4545', '344'];
+// charArray.forEach(val => val.includes('jncdj'));
+numArray.forEach(val => val.toExponential());
+
+
+// Tupple type
+let valArray: [number, string] = [1, "kf"]
+console.log(valArray);
+let coordinates3D: [number, number, number, null] = [2, 33, 23, null];
+
+let response: [number, string] = [200, "Success"]; //http r/s
+response.push(0); // drawback of tupple in TS
+console.log('response ', response); //flaw
+
+// enum
+enum Color {
+    RED,
+    WHITE,
+    GREEN
+}
+console.log(Color);
+
+let color: Color = Color.RED;
+console.log(color);
+
+// const small = 1;
+// const medium = 2;
+// const large = 3;
+// let size = medium;
+
+// enum Size {
+//     Small, Medium, Large
+// }
+
+const enum Size {
+    Small, Medium, Large
+}
+let size: Size = Size.Large;
+console.log(size);
+
+// unknown type (Any variable whose value is not decided)
+let notSure: unknown = 'a';
+if (typeof (notSure) === 'number') {
+    notSure.toFixed(2);
+} else if (typeof (notSure) === 'string') {
+    notSure.length;
+}
+
+
+// never type (It doesn't return any value, work in endless loop. Used in throwing errors & infinite loop )
+function throwErr(message: string): never {
+    throw new Error(message);
+}
+// throwErr("It will continously occur.");
+
+function infiniteLoop(): never {
+    while (true) {
+        console.log(232);
+    }
+}
+// infiniteLoop();
+
+// Void Type (It doesn't return any value, type)
+function voidFun(msg: string): void {
+    console.log(msg)
+    return undefined;
+}
+voidFun("void function");
+
+
+// Type inference (Whenever TS not sure what type we have given in that case it consider the initialized value type) & type assertions (type assertion is a way to tell the compiler, "I know more about the type of this value than you do." It doesn't change the actual type of the value at runtime but tells TypeScript to treat it as a specific type.)
+let someValue: any = "342 43fvf";
+let strLength: number = (someValue as string).length;
+console.log(strLength);
+
+// union type (Ek value ki ek jyada value hogi)
+let id: string | number;
+id = "kd"; id = 23;
+console.log(id);
+
+function printUniqueId(id: string | number) {
+    console.log(`Your unique id is: ${id}`);
+}
+printUniqueId(34);
+
+//Type narrowing (Type narrowing in TypeScript is the process of refining the type of a value based on checks performed in your code.)
+function narrowingFun(id: string | number) {
+    if (typeof id === 'string') {
+        console.log(`Id is string: ${id}`);
+    } else {
+
+    }
+}
+
+
+
+// INTERFACE
+//  (
+// Describe Object Structure: Define properties and their types.
+// Optional Properties: Use ? to make a property optional.
+// Read-Only Properties: Use readonly to prevent modification.
+// Function Types: Define the shape of a function.
+// Extendable: Use extends to create complex interfaces.
+// provide type safety (bar bar kon type dete rahenga while reusing)
+// )
+
+// 1. Basic Interface
+interface Person {
+    name: string;
+    age: number;
+}
+// Here Person act as a data type to person.
+const person: Person = {
+    name: "Alice",
+    age: 30,
+};
+
+// 2. Optional Properties
+interface Car {
+    brand: string;
+    model?: string;
+}
+const myCar: Car = {
+    brand: "Toyota",
+}
+
+// 3. Read-Only Properties
+interface Book {
+    readonly title: string;
+    author: string;
+}
+
+// DIRECT ASSIGNMENT (: Book) Ensures type checking and all prop should exist
+const myBook: Book = {
+    title: "Krunal",
+    author: "dwfrw"
+};
+// TYPE ASSERTION (as Book) Skips type checking; trusts the developer.
+// const myBook = { 
+//     author: "dwfrw"
+// } as Book;
+console.log(myBook.author);
+
+// 4. Function Types
+interface Great {
+    (name: string): string // It is a function
+}
+const bolNa: Great = (name) => `Tera naam ${name}`;
+console.log(bolNa('Radha-Krishna'));
+
+// 5. Extending Interfaces
+interface Animal {
+    name: string;
+}
+interface Dog extends Animal {
+    breed: string;
+}
+const myDog: Dog = {
+    name: "Buddy",
+    breed: "Golden"
+}
+
+// 6. Using Interfaces with Classes
+interface Shape {
+    area(): number;
+}
+class Circle implements Shape {
+    constructor(public radius: number) { }
+    area() {
+        return Math.PI * this.radius ** 2;
+    }
+}
+const circle = new Circle(5);
+console.log(circle.area());
+
+
+
+// TYPE ALIAS (A type alias in TypeScript is a way to give a custom name to a type. It makes your code more readable and reusable. You define it using the type keyword.)
+// 1. Basic Example
+type User = {
+    name: string;
+    age: number
+}
+const user1: User = {
+    name: "Krishna",
+    age: 34
+}
+
+// 2. Union Types
+type ID = string | number;
+let userIds: ID = "deew";
+userIds = 34;
+
+// 3. Intersection Types (You can use type aliases to create intersection types, combining multiple types into one.)
+type TV = {
+    screen: string;
+}
+type feature = TV & {
+    dolby: string;
+}
+const myTV: feature = {
+    screen: "OLED",
+    dolby: "yes"
+}
+
+// 4. function type (Type aliases can define the structure of a function.)
+// Add defines a function that takes two numbers and returns a number.
+type Add = (num1: number, num2: number) => number;
+const addNumbers: Add = (n1, n2) => n1 * n2;
+console.log(addNumbers(34, 33));
+
+// 5. array types
+type StringArr = string[];
+const names: StringArr = ['dsd', 'dscsf'];
+
+
+
+// OPTIONAL FIELDS (optional fields are properties in an object that may or may not be present. Defined using a ? after the property name in the type or interface.)
+interface User2 {
+    name: string;
+    age?: number
+}
+const usr1: User2 = {
+    name: "def"
+}
+
+
+
+// Functions
+// #Key Features of Functions in TypeScript
+// 1. Type Annotations: You can specify the types of parameters and the return value.
+// 2. Optional and Default Parameters: Make parameters optional or provide default values.
+// 3. Rest Parameters: Handle multiple arguments as an array.
+// 4. Function Overloading: Define multiple signatures for a single function.
+// 5. Arrow Functions: Write shorter syntax for functions.
+
+// 1. Basic Function with Type Annotations
+function add(a: number, b: number) {
+    return a + b;
+}
+console.log(add(43, 43));
+
+// 2. Optional Parameters
+function greet(name: string, age?: number): string {
+    return age ? `Hello ${name} your age is ${age}` : `Hello ${name}`;
+}
+console.log(greet("Krishna"));
+console.log(greet("Radha", 100));
+
+// 3. Default Parameters
+function multiply(a: number, b: number = 1): number {
+    return a * b;
+}
+console.log(multiply(23));
+console.log(multiply(32, 23));
+
+// 4. Rest Parameters (Use ... to accept multiple arguments.)
+function sum(...numbers: number[]): number {
+    return numbers.reduce((total, num) => total + num, 0);
+}
+console.log(sum(23, 324, 3424, 453));
+
+// 5. Arrow Function
+const square = (x: number): number => {
+    return x * x;
+}
+console.log(square(45));
+
+
+
+// 5. FUNCTION OVERLOADING
+// Function overloading allows you to define multiple ways (signatures) to call the same function. Each "way" specifies:
+// The number of arguments.
+// The types of arguments.
+// The return type.
+// Step 1: Define overload signatures
+function overloading(a1: number, a2: number): number;
+function overloading(a1: string, a2: string): string;
+// Step 2: Provide a single implementation
+function overloading(a1: any, a2: any): any {
+    return a1 + a2;
+}
+console.log(overloading(1, 2));       // Output: 3
+console.log(overloading("Hello, ", "World!")); // Output: Hello, World!
+
+
+
+// HIGHER-ORDER FUNCTIONS
+// 1]
+function operate(a: number, b: number, operation: (x: number, y: number) => number): number {
+    return operation(a, b);
+}
+const res = operate(34, 33, (e, n) => e + n);
+
+// 2]
+// // Step 1: Higher-Order Function
+// function processNumbers(numbers, operation) {
+//     const result = [];
+//     for (let number of numbers) {
+//         result.push(operation(number)); // Step 3: Apply the operation
+//     }
+//     return result; // Step 4: Return the result
+// }
+// // Step 2: Callback Functions
+// function double(num) {
+//     return num * 2; // Doubles the number
+// }
+// function square1(num) {
+//     return num * num; // Squares the number
+// }
+// // Step 5: Use Higher-Order Function
+// const numbers = [1, 2, 3, 4];
+// const doubledNumbers = processNumbers(numbers, double); // Pass 'double' as the recipe
+// console.log(doubledNumbers); // Output: [2, 4, 6, 8]
+// const squaredNumbers = processNumbers(numbers, square1); // Pass 'square' as the recipe
+// console.log(squaredNumbers); // Output: [1, 4, 9, 16]
+
+
+
+// CLASSES
+// 1. Defining Classes and Constructors (A class is a blueprint for creating objects. In TypeScript, classes can have properties and methods, and the constructor method initializes class properties.)
+
+class Akhadas {
+    name: string;
+    constructor(name: string) {
+        this.name = name;
+    }
+    greet(): void {
+        console.log(`Hello ${this.name}`);
+    }
+}
+const akhadas = new Akhadas('Juna');
+akhadas.greet();
+
+// 2. Access Modifiers (public, private, protected)
+class Employee {
+    public name: string;
+    private salary: number;
+    constructor(name: string, salary: number) {
+        this.name = name;
+        this.salary = salary;
+    }
+    displaySalary(): void {
+        console.log(`Salary is ${this.salary}`);
+    }
+}
+const employee = new Employee("Kd", 56999);
+// console.log("Le salary:- "+employee.salary);
+employee.displaySalary();
+
+// 3. Readonly Properties (readonly properties can only be set during initialization or in the constructor.)
+class Cars {
+    readonly brandd: string;
+    constructor(brandd: string) {
+        this.brandd = brandd;
+    }
+}
+const car = new Cars("Maruti");
+console.log(car.brandd);
+// car.brandd = 're';
+
+// 4. Getters and Setters (Getters and setters allow you to control access to a class property.)
+class Rectangle {
+    private width: number;
+    private height: number;
+    constructor(width: number, height: number) {
+        this.width = width;
+        this.height = height;
+    }
+    get area(): number {
+        return this.width * this.height;
+    }
+    // A 'set' accessor must have exactly one parameter.
+    set widthh(value: number) {
+        if (value > 0) {
+            this.width = value;
+        } else {
+            console.log("Width must be positive!");
+        }
+    }
+}
+const rect = new Rectangle(23, 54);
+console.log(rect.area);
+rect.widthh = 34;
+
+// 5. Static Members (static properties and methods belong to the class itself, not to any object instance.)
+class MathUtils {
+    static PI = 3.14;
+
+    static calculateCircleArea(radius: number): number {
+        return MathUtils.PI * radius * radius;
+    }
+}
+console.log(MathUtils.PI); // Output: 3.14
+console.log(MathUtils.calculateCircleArea(5)); // Output: 78.5
+
+// 6. Abstract Classes (Abstract classes define methods that must be implemented in derived classes. They cannot be instantiated directly.)
+// base class
+abstract class Shape {
+    abstract calculateArea(): number;
+    // concreate method
+    display(): void {
+        console.log("This is a shape");
+    }
+}
+// derived class
+class Circlee extends Shape {
+    radius: number;
+    constructor(radius: number) {
+        super();
+        this.radius = radius;
+    }
+    calculateArea(): number {
+        return Math.PI * this.radius * this.radius;
+    }
+}
+const circlee = new Circlee(3);
+console.log(circlee.calculateArea()); // Output: 28.274333882308138
