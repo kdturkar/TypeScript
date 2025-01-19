@@ -501,7 +501,7 @@ console.log(account.getBalance()); // 1500
 class Animal {
     protected sound: string;
     constructor(sound: string) {
-        this.sound = sound;
+        this.sound =  sound;
     }
     public makeSound(): void {
         console.log(this.sound);
