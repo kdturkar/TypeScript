@@ -560,14 +560,14 @@ const myVehicle: Vehicle4 = new Car4();
 // ** This behavior aligns with the Liskov Substitution Principle in OOP:
 // => You can substitute an object of a derived class (Car4) wherever an object of the base class (Vehicle4) is expected.
 
-myVehicle.move();
+myVehicle;
 
 // # Summary for Interviews:
 // Encapsulation: Protect and control access to data.
 // Abstraction: Simplify usage by exposing only necessary details.
 // Inheritance: Reuse code across related classes.
 // Polymorphism: Achieve dynamic behavior based on object types.
-// Access Modifiers: Govern access levels for properties and methods.
+// Access Modifiers: Govern access levels for properties and methods
 
 
 
