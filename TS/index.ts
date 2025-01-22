@@ -560,7 +560,7 @@ const myVehicle: Vehicle4 = new Car4();
 // ** This behavior aligns with the Liskov Substitution Principle in OOP:
 // => You can substitute an object of a derived class (Car4) wherever an object of the base class (Vehicle4) is expected.
 
-myVehicle;
+myVehicle.move();
 
 // # Summary for Interviews:
 // Encapsulation: Protect and control access to data.
