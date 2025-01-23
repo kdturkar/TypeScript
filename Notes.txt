@@ -1,6 +1,31 @@
+##What features does TypeScript support that JavaScript doesn't?
+Ans:-
+Static Typing: TypeScript allows explicit type annotations for variables, function parameters, and return values, reducing runtime errors.
+
+Interfaces: TypeScript enables defining object structures with interfaces for type safety and better code readability.
+
+Generics: TypeScript supports generics for creating reusable and type-safe components and functions.
+
+Enums: TypeScript introduces enums for named constants, improving code clarity.
+
+Access Modifiers: Supports private, protected, and public modifiers for controlling visibility in classes, enforcing encapsulation.
+
+Advanced Types: Includes union types, intersection types, tuples, and type aliases for flexible and precise type definitions.
+
+Type Inference: TypeScript can infer types based on initial values, reducing boilerplate code while ensuring type safety.
+
+Utility Types: Built-in types like Partial, Pick, Readonly, etc., to manipulate existing types.
+
+Decorators: Provides support for decorators (experimental) for meta-programming and adding custom behavior to classes and methods.
+
+Error Detection Before Runtime: TypeScript detects type-related errors at compile-time, preventing bugs during runtime.
+
+Compatibility: TypeScript compiles to JavaScript, ensuring seamless integration with existing JavaScript code while offering enhanced features.
+
+
 ## Difference b/w TS & JS.
 #Type System:- 
-typescript is statically typed like java, whereas javascript is dynamically typed.
+typescript is statically typed (explicitly define the types of variables, function parameters, and return values, and TypeScript checks these types at compile-time.) like java, whereas javascript is dynamically typed.
 
 #Compilation:- 
 Needs to be compiled to javascript, whereas in JS it is directly executed by browser and node.js.

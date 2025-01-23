@@ -501,7 +501,7 @@ console.log(account.getBalance()); // 1500
 class Animal {
     protected sound: string;
     constructor(sound: string) {
-        this.sound =  sound;
+        this.sound = sound;
     }
     public makeSound(): void {
         console.log(this.sound);
@@ -572,3 +572,63 @@ myVehicle.move();
 
 
 
+// GENERICS 
+// Generics in TypeScript allow us to define reusable and flexible components that work with different data types while maintaining type safety. They help avoid repetitive code and ensure type correctness during development.
+
+// 1] Generic Function
+// Generic function to return the same type as the input
+function identity<T>(value: T): T {
+    // T is a type parameter that can be replaced with any type when the function is called
+    return value;
+}
+const numm = identity<number>(34); // T is replaced with number
+const str = identity<string>("javascript");
+// Why use generics here?
+// To make the identity function flexible so it can work with any type (number, string, etc.), ensuring type safety.
+
+// 2] Generics with Arrays
+function getFirstElement<T>(arr: T[]): T {
+    return arr[0];
+}
+const firstName = getFirstElement<number>([23, 434, 23, 352]);
+const firstStr = getFirstElement<string>(['dd', 'ded', 'ded']);
+
+// 3] Generic Class
+// Generic class to store and retrieve content of any type
+class Box<T> {
+    private _content: T;
+    constructor(content: T) {
+        this._content = content;
+    }
+    getContent(): T {
+        return this._content;
+    }
+}
+const box_1 = new Box<number>(232);
+console.log(box_1.getContent());
+const box_2 = new Box<string>("string");
+console.log(box_2.getContent());
+// Why use generics here?
+// To allow the Box class to store content of any type without creating separate classes for different types.
+
+// 4] Generic Interface
+interface keyPair<k, v> {
+    key: k;
+    value: v;
+}
+// keyPair Specifies the type of the variable
+const numberStringPair: keyPair<number, string> = {
+    key: 1,
+    value: "One"
+}
+
+// 5] Generics with Constraints
+// Generic function with a constraint to accept only types with a length property (for this case)
+function logLength<T extends { length: number }>(value: T): void {
+    console.log(value.length);
+}
+logLength([23,34,45]); // Works: array has a length property
+logLength("dssfd"); // Works: string has a length property
+// logLength(123); // Error: number does not have a length property
+// Why use constraints here?
+// To restrict the generic type T to only those types that have a length property, ensuring the function operates correctly.
