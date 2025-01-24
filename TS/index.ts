@@ -627,8 +627,68 @@ const numberStringPair: keyPair<number, string> = {
 function logLength<T extends { length: number }>(value: T): void {
     console.log(value.length);
 }
-logLength([23,34,45]); // Works: array has a length property
+logLength([23, 34, 45]); // Works: array has a length property
 logLength("dssfd"); // Works: string has a length property
 // logLength(123); // Error: number does not have a length property
 // Why use constraints here?
 // To restrict the generic type T to only those types that have a length property, ensuring the function operates correctly.
+
+
+
+
+// LITERAL TYPES (It allow us to specify exact values a variable can hold, we can define more precise types than general data types like string, number, or boolean.)
+
+// Types of Literal Types
+
+// 1] String Literal Types (Allows defining variables that can hold specific string values.)
+type Direction = "up" | "down" | "left" | "right";
+let move: Direction;
+move = "up"; // ✅ Valid
+move = "down"; // ✅ Valid
+// move = "forward"; // ❌ Error: Type '"forward"' is not assignable to type 'Direction'.
+
+// 2] Numeric Literal Types
+type DiceRoll = 1 | 2 | 3 | 4 | 5 | 6;
+let roll: DiceRoll;
+roll = 3; // ✅ Valid
+// roll = 7; // ❌ Error: Type '7' is not assignable to type 'DiceRoll'.
+
+// 3] Boolean Literal Types
+type IsEnabled = true;
+let featureToggle: IsEnabled;
+featureToggle = true; // ✅ Valid
+// featureToggle = false; // ❌ Error: Type 'false' is not assignable to type 'true'.
+
+// Key Use Cases in Interviews
+// a] Function Parameters
+function setAlignment(alignment: "left" | "center" | "right"): void {
+    console.log(`Alignment set to ${alignment}`);
+}
+setAlignment("center");
+// setAlignment("re");
+
+// b] Discriminated Unions
+// Literal types work well in combination with unions and switch statements, especially in scenarios like handling API responses or states.
+type Shapes = { type: 'circle'; radius: number } | { type: 'rectangle'; width: number; height: number };
+
+function calculateArea(shape: Shapes): number {
+    switch (shape.type) {
+        case 'circle':
+            return Math.PI * shape.radius ** 2;
+        case 'rectangle':
+            return shape.width * shape.height;
+        default:
+            throw new Error("Invalid shape");
+    }
+}
+const circleArea = calculateArea({ type: 'circle', radius: 34 });
+
+// Questions & Ans on it
+// q1) What are literal types, and why are they useful?
+// => Literal types restrict a variable to specific values, improving type safety & error detection at compile time.
+
+// q2) How can you use literal types to validate function parameters?
+// => By defining function parameters as a union of literal types, you can ensure the function accepts only valid values.
+
+// q3) What is a discriminated union, and how are literal types related?
+// => A discriminated union uses literal types to differentiate between objects in a union, making type narrowing easier with switch or if statements.
