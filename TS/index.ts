@@ -692,3 +692,269 @@ const circleArea = calculateArea({ type: 'circle', radius: 34 });
 
 // q3) What is a discriminated union, and how are literal types related?
 // => A discriminated union uses literal types to differentiate between objects in a union, making type narrowing easier with switch or if statements.
+
+
+
+// TYPE GUARDS
+// 1] typeof (Used to check primitive types like string, number, boolean, etc.)
+function printValue(value: string | number): string {
+    if (typeof value === 'string') {
+        return 'ererv';
+    } else {
+        return 'ererv';
+    }
+}
+printValue("Hello"); // Output: String value: HELLO
+printValue(42);      // Output: Number value: 42.00
+
+// 2] instanceof (Used to check if an object is an instance of a particular class.)
+class Daug {
+    bark() {
+        console.log("woof");
+    }
+}
+class Caty {
+    meow() {
+        console.log("meow");
+    }
+}
+function makeSound(animal: Daug | Caty) {
+    if (animal instanceof Daug) {
+        animal.bark();
+    } else {
+        animal.meow();
+    }
+}
+makeSound(new Daug());
+
+// 3] in (Checks if a property exists in an object.)
+type Car3 = { drive3: () => void };
+type Boat3 = { sail3: () => void };
+
+function operate3(vehicle: Car3 | Boat3) {
+    if ("drive3" in vehicle) {
+        vehicle.drive3(); // We know it's a Car
+    } else {
+        vehicle.sail3(); // We know it's a Boat
+    }
+}
+
+const car3: Car3 = { drive3: () => console.log("Driving the car") };
+const boat3: Boat3 = { sail3: () => console.log("Sailing the boat") };
+
+operate3(car3);  // Output: Driving the car
+operate3(boat3); // Output: Sailing the boat
+
+
+// 4] Custom Type Guard (Useful for more complex checks with user-defined types.Define your own logic to check the type using the 'is' keyword.)
+type Alien = { bread: string };
+type Predator = { fins: string };
+
+function isAlien(species: Alien | Predator): species is Alien {
+    return "bread" in species;
+}
+function identifySpecies(species: Alien | Predator) {
+    if (isAlien(species)) {
+        console.log(`It's a dog of breed: ${species.bread}`);
+    } else {
+        console.log(`It's a fish with ${species.fins} fins`);
+    }
+}
+const alien: Alien = { bread: "golden" };
+const predator: Predator = { fins: "e" }
+identifySpecies(alien);
+
+
+
+// keyOf (keyOf keyword in TypeScript is a utility type that returns a union of all the keys of a given type. It’s mainly used to ensure type safety when working with object keys.)
+
+type Personn = {
+    name: string;
+    age: number;
+}
+// `keyof Personn` creates a union of keys: "name" | "age"
+type PersonnKeys = keyof Personn; // Equivalent to: "name" | "age"
+
+let key: PersonnKeys;
+key = "name";
+key = "age";
+// key = "dee"; // Error: Type '"dee"' is not assignable to type 'PersonKeys'
+
+function getValue<T, K extends keyof T>(obj: T, key: K): T[K] {
+    return obj[key];
+}
+const personn: Personn = { name: "Dfd", age: 43 };
+const nameee = getValue(personn, "name");
+
+
+
+// INDEX SIGNATURE
+interface NumberDictionary {
+    [key: string]: number; // Index signature
+}
+const scores: NumberDictionary = {
+    math: 53,
+    34: 2e3, // 34 is treated as "34" internally.
+}
+console.log(scores.math); // 95
+
+
+
+
+// UTILITY TYPES (Utility types in TypeScript are built-in types that provide common transformations and modifications for TypeScript types.)
+// 1. Partial<Type> (Makes all properties in a type optional.)
+type Userr = { name: string, age: number }
+const partialUser: Partial<Userr> = { name: "Krishna" }
+
+// 2. Required<Type> (Makes all properties in a type mandatory.)
+type Userr1 = { name?: string; age?: number };
+// Makes 'name' and 'age' mandatory
+const userr: Required<Userr1> = { name: "John", age: 30 };
+
+// 3. Readonly<Type> (Makes all properties in a type read-only (immutable).)
+// Prevents modification of 'name' and 'age'
+const readonlyUser: Readonly<User> = { name: "John", age: 30 };
+// readonlyUser.name = "Doe"; // Error
+
+// 4. Pick<Type, Keys> (Picks a subset of properties from a type.)
+type Userr2 = { name: string; age: number; email: string };
+// Picks only 'name' and 'email'
+const pickedUser: Pick<Userr2, "name" | "email"> = { name: "John", email: "john@example.com" };
+
+// 5. Omit<Type, Keys> (Omits specific properties from a type.)
+type Userr5 = { name: string; age: number; email: string };
+// Omits 'email'
+const omittedUser: Omit<Userr5, "email"> = { name: "John", age: 30 };
+
+// 6. Record<Keys, Type>
+// Creates a type with a set of keys of a specific type.
+// Maps string keys to number values
+const scores6: Record<string, number> = { math: 90, science: 85 };
+
+// 7. Exclude<Type, ExcludedUnion>
+// Excludes specific types from a union.
+type AllRoles = "admin" | "user" | "guest";
+// Removes 'guest'
+type AllowedRoles = Exclude<AllRoles, "guest">;
+// AllowedRoles = "admin" | "user"
+
+// 8. Extract<Type, Union> (Extracts only specific types from a union.)
+type AllRoles8 = "admin" | "user" | "guest";
+// Keeps only 'user' and 'guest'
+type PublicRoles = Extract<AllRoles8, "user" | "guest">;
+// PublicRoles = "user" | "guest"
+
+// 9. NonNullable<Type> (Removes null and undefined from a type.)
+type MaybeUser = string | null | undefined;
+// Removes 'null' and 'undefined'
+type User9 = NonNullable<MaybeUser>;
+// User = string
+
+// 10. ReturnType<Type> (Extracts the return type of a function.)
+function greet10(): string {
+    return "Hello";
+}
+// Extracts 'string'
+type GreetReturn = ReturnType<typeof greet10>;
+// GreetReturn = string
+
+// 11. InstanceType<Type> (Extracts the type of an instance of a class.)
+class UBhalo {
+    name: string = "John";
+    age: number = 30;
+}
+// Extracts instance type of UBhalo
+type leInstance = InstanceType<typeof UBhalo>;
+// leInstance = UBhalo
+
+
+
+// MODULES & NAMESPACES
+// a) Modules in TypeScript are a way to organize and encapsulate code. A module is essentially a file containing related code (classes, functions, variables, etc.) that is exported so it can be used in other files.
+// Use Case =>	Best for splitting code into files
+
+// mathUtils.ts (Module)
+export function addM(a: number, b: number): number {
+    return a + b;
+}
+export function subtractM(a: number, b: number): number {
+    return a - b;
+}
+
+// main.ts (Importing Module)
+//   import { add, subtract } from './mathUtils';
+console.log(addM(5, 3));       // Output: 8
+console.log(subtractM(5, 3));  // Output: 2
+
+// b) Namespaces are a way to logically group related code. They are used to avoid naming conflicts in large applications. They wrap code in a single namespace object. Namespaces are more common in older TypeScript codebases or when working without a module system like ES modules.
+// Use Case => Best for grouping code in one file
+
+namespace MathUtils {
+    export function add(a: number, b: number): number {
+        return a + b;
+    }
+    export function subtract(a: number, b: number): number {
+        return a - b;
+    }
+}
+
+// Using the namespace
+console.log(MathUtils.add(5, 3));       // Output: 8
+console.log(MathUtils.subtract(5, 3));  // Output: 2
+
+
+
+
+// DECORATORS
+// A decorator in TypeScript is a function that can be attached to a class, method, property, or parameter to extend or modify its behavior at design time, without changing its original implementation.
+// You need to enable experimentalDecorators in tsconfig.json.
+// {
+//     "compilerOptions": {
+//         "experimentalDecorators": true
+//     }
+// }
+
+
+
+
+// ASYNC PROGRAMMING
+// Async programming helps us to perform tasks that take time (like fetching data from a server) without freezing the rest of our code.
+
+// Key Terms:
+// Promise: A promise is like a guarantee that something will happen in the future. It can either:
+
+// Resolve: The task is done, and we got the result.
+// Reject: Something went wrong.
+// Async: When you use async with a function, it means that the function will always return a Promise, even if you don’t write it explicitly.
+
+// Await: await is used to pause the function until the Promise is resolved, making your code wait for results without freezing the whole program.
+
+function fetchData(): Promise<string> {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => resolve("Data fetched!"), 2000); // Simulating a 2-second delay
+    });
+}
+
+fetchData().then(result => {
+    console.log(result);  // After 2 seconds, it will print "Data fetched!"
+});
+
+
+async function fetchData1(): Promise<string> {
+    return new Promise((resolve, reject) => {
+        setTimeout(() => {
+            if (true) {
+                resolve("Data fetched asynchronously!");
+            } else {
+                reject("Data fetched asynchronously!");
+            }
+        }, 2000); // 2-second delay
+    });
+}
+
+async function main() {
+    const result = await fetchData1();  // We are waiting here until fetchData is done
+    console.log(result);  // After 2 seconds, it will print "Data fetched asynchronously!"
+}
+
+main();
